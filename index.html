@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <script src="functions.js"></script>
+</head>
+
+<body>
+  <br>
+  <div class="ui raised text container segment center aligned">
+    <h1 class="ui header">Kismet Tool</h1><br>
+    <p>Visual editor:</p>
+
+    <!-- Kismet visual editor start here-->
+    <button class="ui orange button" onclick="showLocation()">Add Location</button>
+      <!-- Being location stuff here-->
+      <div id="location" class="ui raised segment center aligned">
+        <span>Location type: </span>
+        <div class="ui input focus">
+          <input type="text" id="locType" placeholder="Location type...">
+        </div>
+        <button class="ui blue button" onclick="locTypeFunc()">Initialize Type</button>
+        <br>
+
+        <div id="location-support">
+
+          <span>Supports: </span>
+          <div class="ui input focus">
+            <input type="text" placeholder="#" size="5" id="locNum">
+            <input type="text" placeholder="List of Role" size="10" id="locRole">
+          </div>
+
+          <button class="ui green button" onclick="addLocSup()">Add</button>
+          <button class="ui red button" onclick="remLocSup()">Remove</button>
+        </div>
+      </div>
+
+
+
+      <!-- end location stuff here -->
+    <br><br>
+    <p>Kismet Code Output:</p>
+
+    <!-- Kismet section will come out here -->
+
+    <div class="ui raised segment text left aligned" style="font-family:'Courier New', 'Lucida Console';">
+      <p id="kismetCode">Code will come out here</p>
+    </div>
+  </div>
+</body>
+
+
+</html>
