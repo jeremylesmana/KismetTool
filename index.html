@@ -14,9 +14,10 @@
     <p>Visual editor:</p>
 
     <!-- Kismet visual editor start here-->
-    <button class="ui orange button" onclick="showLocation()">Add Location</button>
-      <!-- Being location stuff here-->
-      <div id="location" class="ui raised segment center aligned">
+    <button class="ui orange button" onclick="toggleAction()">Add Action</button>
+    <button class="ui orange button" onclick="toggleLocation()">Add Location</button>
+      <!-- Begin location stuff here-->
+      <div id="locationDiv" class="ui raised segment center aligned">
         <span>Location type: </span>
         <div class="ui input focus">
           <input type="text" id="locType" placeholder="Location type...">
@@ -28,18 +29,52 @@
 
           <span>Supports: </span>
           <div class="ui input focus">
-            <input type="text" placeholder="#" size="5" id="locNum">
-            <input type="text" placeholder="List of Role" size="10" id="locRole">
+            <input type="text" placeholder="#" size="5" id="locSupNum1">
+            <input type="text" placeholder="List of Role" size="10" id="locSupRole1">
           </div>
 
-          <button class="ui green button" onclick="addLocSup()">Add</button>
-          <button class="ui red button" onclick="remLocSup()">Remove</button>
+          <button class="ui green icon button" onclick="addLocSup()"><i class="plus icon"></i></button>
+          <button class="ui red icon button" onclick="remLocSup()"><i class="minus icon"></i></button>
         </div>
       </div>
+      <!-- End location stuff here -->
 
+      <!-- START Action Stuff Here-->
+      <div id="actionDiv" class="ui raised segment left aligned">
+        <span>Action name:</span>
+        <div class="ui input focus">
+          <input type="text" id="actionName" placeholder="Action name...">
+        </div><br><br>
+        <span>Participants:</span>
+        <button class="ui green icon button" onclick="addActPart()"><i class="plus icon"></i></button>
+        <button class="ui red icon button" onclick="remActPart()"><i class="minus icon"></i></button>
+        <br><br>
+        <div id="actionPartDiv" class="ui input focus">
+          <input type="text" id="actionPart1" placeholder="Participant 1">
+        </div><br><br>
 
+        <span>Tags:</span>
+        <button class="ui green icon button" onclick="addActTag()"><i class="plus icon"></i></button>
+        <button class="ui red icon button" onclick="remActTag()"><i class="minus icon"></i></button>
+        <br><br>
+        <div id="actionTagDiv" class="ui input focus">
+          <input type="text" id="actionTag1" placeholder="Tag 1">
+        </div><br><br>
 
-      <!-- end location stuff here -->
+        <span>Action location:</span>
+        <div class="ui input focus">
+          <input type="text" id="actionLocation" placeholder="Action location...">
+        </div><br><br>
+
+        <span>Conditions:</span>
+        <button class="ui green icon button" onclick="addActCond()"><i class="plus icon"></i></button>
+        <button class="ui red icon button" onclick="remActCond()"><i class="minus icon"></i></button>
+        <br><br>
+        <div id="actionCondDiv" class="ui input focus">
+          <input type="text" id="actionCond1" placeholder="Condition 1">
+        </div>
+      </div>
+      <!-- END Action Stuff Here-->
     <br><br>
     <p>Kismet Code Output:</p>
 
