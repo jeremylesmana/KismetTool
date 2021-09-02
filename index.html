@@ -51,9 +51,11 @@
         <br><br>
 
         <div id="actionPartDiv">
+          //Here is one input form
           <div class="ui input focus" id="actionPart1Form">
             <input type="text" id="actionPart1" placeholder="Participant 1">
           </div>
+
         </div>
         <br><br>
 
@@ -63,9 +65,11 @@
         <br><br>
 
         <div id="actionTagDiv">
+          //Here is one input form
           <div class="ui input focus" id="actionTag1Form">
             <input type="text" id="actionTag1" placeholder="Tag 1">
           </div>
+
         </div>
         <br><br>
 
@@ -75,11 +79,13 @@
         </div><br><br>
 
         <span>Conditions:</span>
-        <button class="ui green icon button" onclick="addActCond()"><i class="plus icon"></i></button>
-        <button class="ui red icon button" onclick="remActCond()"><i class="minus icon"></i></button>
+        <button class="ui green icon button" onclick="addFields('actCond')"><i class="plus icon"></i></button>
+        <button class="ui red icon button" onclick="removeFields('actCond')"><i class="minus icon"></i></button>
         <br><br>
-        <div id="actionCondDiv" class="ui input focus">
-          <input type="text" id="actionCond1" placeholder="Condition 1">
+        <div id="actionCondDiv">
+          <div class="ui input focus" id="actionCond1Form">
+            <input type="text" id="actionCond1" placeholder="Condition 1">
+          </div>
         </div>
       </div>
       <!-- END Action Stuff Here-->

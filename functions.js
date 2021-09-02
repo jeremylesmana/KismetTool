@@ -16,6 +16,7 @@ var actName = "";
 var actParts = new Array();
 var actPartCounter = 1;
 var actTagCounter = 1;
+var actCondCounter = 1;
 
 var actToggle = false;
 
@@ -58,20 +59,6 @@ function toggleAction() {
 }
 
 //Action functions
-function addActPart() {
-  if(actPartCounter >= 0) {
-    actPartCounter = actPartCounter + 1;
-    actionPartDiv = document.getElementById("actionPartDiv");
-    partForm = document.createElement("div");
-    partForm.classList.add('ui');
-    partForm.classList.add('input');
-    partForm.classList.add('focus');
-    partForm.id = "actionPart" + actPartCounter + "Form";
-    partForm.innerHTML = '<input type="text" id="actionPart' + actPartCounter + '" placeholder="Participant ' + actPartCounter + '">';
-    actionPartDiv.append(partForm);
-  }
-}
-
 function addFields(fieldType) {
   var sectionDiv;
   //Switch for the counter to add to counter
@@ -84,11 +71,17 @@ function addFields(fieldType) {
       }
       break;
 
-    //Adding
     case "actTag":
       if(actTagCounter >= 0) {
         actTagCounter = actTagCounter + 1;
         sectionDiv = document.getElementById("actionTagDiv");
+      }
+      break;
+
+    case "actCond":
+      if(actCondCounter >= 0) {
+        actCondCounter = actCondCounter + 1;
+        sectionDiv = document.getElementById("actionCondDiv");
       }
       break;
   }
@@ -110,6 +103,11 @@ function addFields(fieldType) {
       partForm.id = "actionTag" + actTagCounter + "Form";
       partForm.innerHTML = '<input type="text" id="actionTag' + actTagCounter + '" placeholder="Tag ' + actTagCounter + '">';
       break;
+
+    case "actCond":
+      partForm.id = "actionCond" + actCondCounter + "Form";
+      partForm.innerHTML = '<input type="text" id="actionCond' + actCondCounter + '" placeholder="Condition ' + actCondCounter + '">';
+      break;
   }
   //Finally append it
   sectionDiv.append(partForm);
@@ -128,6 +126,10 @@ function removeFields(fieldType) {
       if (actTagCounter >= 0)
         tempSecDiv = "actionTag" + actTagCounter + "Form";
       break;
+    case "actCond":
+      if (actCondCounter >= 0)
+        tempSecDiv = "actionCond" + actCondCounter + "Form";
+      break;
   }
   sectionDiv = document.getElementById(tempSecDiv);
   sectionDiv.remove();
@@ -138,6 +140,9 @@ function removeFields(fieldType) {
       break;
     case "actTag":
       actTagCounter = actTagCounter - 1;
+      break;
+    case "actCond":
+      actCondCounter = actCondCounter - 1;
       break;
   }
 }
