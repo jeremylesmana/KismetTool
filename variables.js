@@ -14,12 +14,5 @@ var locEachTurn = "";
 
 var locToggle = false;
 
+var locations = ["Library", "Bar", "Zoo"];
 //action variables
-
-var actName = "";
-var actParts = new Array();
-var actPartCounter = 1;
-var actTagCounter = 1;
-var actCondCounter = 1;
-
-var actToggle = false;

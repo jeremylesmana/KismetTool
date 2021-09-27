@@ -1,7 +1,3 @@
-/* Form fields script
-  Here is going to be the file where the user can control the form fields,
-  such as adding elements, removing elements, and etc.
- */
 function addFields(fieldType) {
   var sectionDiv;
   //Switch for the counter to add to counter
