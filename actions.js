@@ -8,9 +8,16 @@ var actToggle = false;
 var actLocCounter = 0;
 // + actLocCounter +
 
+var actParamArray = new Array();
+var actParamCounter = 0;
+
 $(document).ready(function(){
 
   updateLocList();
+  updatePartList();
+  $("#actParamAddPartBox").hide();
+  $("#actParamAddLocBox").hide();
+  $("#actParamAddEventBox").hide();
 });
 
 function actionSubmit() {
@@ -36,14 +43,23 @@ function actionSubmit() {
 function updateLocList() {
   //Populate location select with location array elements
   locationSelect = document.getElementById("actLocDropdown");
-      while (locationSelect.firstChild) {
-          locationSelect.removeChild(locationSelect.firstChild);
-      }
+  locationSelect.innerHTML = '';
 
       for (var i = 0; i < locations.length; i++) {
         optionElement = document.createElement("option");
         optionElement.value = locations[i];
         locationSelect.appendChild(optionElement);
+      }
+}
+function updatePartList() {
+  //Populate location select with location array elements
+  participantSelect = document.getElementById("actPartDropdown");
+  participantSelect.innerHTML = '';
+
+      for (var i = 0; i < participants.length; i++) {
+        optionElement = document.createElement("option");
+        optionElement.value = participants[i];
+        participantSelect.appendChild(optionElement);
       }
 }
 
@@ -73,7 +89,16 @@ function tempLocationDel() {
 }
 
 function wildCheck(x) {
-
+  disabledID = "actLocType" + x;
+  disableElement = document.getElementById(disabledID);
+  if(!disableElement.disabled) {
+    disableElement.disabled = true;
+    disableElement.value = "";
+    disableElement.placeholder = "Location disabled";
+  } else {
+    disableElement.disabled = false;
+    disableElement.placeholder = "Location...";
+  }
 }
 
 function addActLoc () {
@@ -85,13 +110,16 @@ function addActLoc () {
 
   locationBox.innerHTML = "Location type:\
   <div class='ui input focus'>\
-    <input type='text' placeholder='Location...'' id='actLocType" + actLocCounter + " list='actLocDropdown' onfocusout='locTypeField(this.value)'>\
+    <input type='text' placeholder='Location...'' id='actLocType" + actLocCounter + "' list='actLocDropdown' onfocusout='locTypeField(this.value)'>\
   </div><br><br>\
-  <div id='result'></div>\
   <div class='ui toggle checkbox'>\
-    <input type='checkbox' name='public' onchange='wildCheck(loc" + actLocCounter + ")'>\
+    <input type='checkbox' name='public' onchange='wildCheck(" + actLocCounter + ")'>\
     <label>Wildcard</label>\
-  </div>";
+  </div><br><br>\
+  Location participant:\
+  <div class='ui input focus'>\
+    <input type='text' placeholder='Participant...'' id='actLocPart" + actLocCounter + "' list='actPartDropdown' onfocusout='locPartField(this.value)'>\
+  </div><br><br>";
   document.getElementById("locationBoxes").appendChild(locationBox);
 }
 
@@ -103,4 +131,167 @@ function remActLoc() {
   if(actLocCounter > 0) {
     actLocCounter--;
   }
+}
+
+function actParamChange(x) {
+  $("#actParamAddPartBox").hide();
+  $("#actParamAddLocBox").hide();
+  $("#actParamAddEventBox").hide();
+  if(x=="1") {
+    $("#actParamAddPartBox").show();
+  }
+  else if(x=="2") {
+    $("#actParamAddLocBox").show();
+  }
+  else if(x=="3") {
+    $("#actParamAddEventBox").show();
+  }
+  else {
+    $("#actParamAddPartBox", "#actParamAddLocBox", "#actParamAddEventBox").hide();
+  }
+}
+
+function addParam() {
+  let paramDropdown = document.getElementById("actParamDrop");
+
+  let partName = document.getElementById("actParamAddPartName");
+  let partSign = document.getElementById("actParamAddPartType");
+  let partRole = document.getElementById("actParamAddPartRole");
+  let locName = document.getElementById("actParamAddLoc");
+  let eventName = document.getElementById("actParamAddEvent");
+
+  if(paramDropdown.value == "1") {
+    if(partName.value == "") 
+      alert("You didn't enter anything for the participant name");
+     else {
+       newParameter = {
+          id: actParamCounter,
+          type: "part",
+          name: partName.value,
+          sign: partSign.value,
+          role: partRole.value
+      }
+       
+       actParamArray.push(newParameter);
+       updateParameterList();
+       partName.value = "";
+       partSign.value = "0";
+       partRole.value = "";
+       actParamCounter++;
+     }
+  }
+
+  else if(paramDropdown.value == "2") {
+    if(locName.value == "") {
+      alert("You didn't enter anything for the location name");
+    }
+    else {
+      newParameter = {
+        id: actParamCounter,
+        type: "location",
+        name: locName.value
+      }
+      actParamArray.push(newParameter);
+      updateParameterList();
+      locName.value = "";
+      actParamCounter++;
+    } 
+  }
+  else if(paramDropdown.value == "3") {
+    if(eventName.value == "")
+      alert("You didn't enter anything for the event name");
+
+    else {
+      newParameter = {
+        id: actParamCounter,
+        type: "event",
+        name: eventName.value
+      }
+      actParamArray.push(newParameter);
+      updateParameterList();
+      eventName.value = "";
+      actParamCounter++;
+    } 
+  }
+}
+
+function updateParameterList() {
+  let paramListDiv = document.getElementById("actParameterList");
+  paramListDiv.innerHTML = "";
+  //Clear existing list of tables already.
+
+  for (var i = 0; i < actParamArray.length; i++) {
+
+    if (actParamArray[i].type == "part") {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("ui", "raised","segment","left","aligned");
+      newDiv.innerHTML = 
+      "<button class='ui red icon button mini' onclick='removeParameter("+actParamArray[i].id+")'>\
+        <i class='minus icon'></i>\
+      </button>\
+      <span style='font-size:20px'>\
+      <b>Participant: &nbsp;&nbsp;&nbsp;Name:</b> " + actParamArray[i].name + 
+      " <b>&nbsp;&nbsp;&nbsp;Sign:</b> " + actParamArray[i].sign + 
+      " <b>&nbsp;&nbsp;&nbsp;Role:</b> " + actParamArray[i].role + 
+      "</span>";
+      paramListDiv.appendChild(newDiv);
+    }
+    else if (actParamArray[i].type == "location") {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("ui", "raised","segment","left","aligned");
+      newDiv.innerHTML = 
+      "<button class='ui red icon button mini' onclick='removeParameter("+actParamArray[i].id+")'>\
+        <i class='minus icon'></i>\
+      </button>\
+      <span style='font-size:20px'>\
+      <b>Location: &nbsp;&nbsp;&nbsp;Name:</b> " + actParamArray[i].name + 
+      "</span>";
+      paramListDiv.appendChild(newDiv);
+    }
+    else if (actParamArray[i].type == "event") {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("ui", "raised","segment","left","aligned");
+      newDiv.innerHTML = 
+      "<button class='ui red icon button mini' onclick='removeParameter("+actParamArray[i].id+")'>\
+        <i class='minus icon'></i>\
+      </button>\
+      <span style='font-size:20px'>\
+      <b>Event: &nbsp;&nbsp;&nbsp;Name:</b> " + actParamArray[i].name + 
+      "</span>";
+      paramListDiv.appendChild(newDiv);
+    }
+  }
+}
+
+function removeParameter(removeID) {
+  for (var i = 0; i < actParamArray.length; i++) {
+    if (actParamArray[i].id == removeID) {
+      actParamArray.splice(i, 1);
+      updateParameterList();
+    }
+  }
+}
+
+function addActTag() {
+  var sectionDiv;
+  if(actTagCounter >= 0) {
+    actTagCounter = actTagCounter + 1;
+    sectionDiv = document.getElementById("actionTagDiv");
+  }
+  partForm = document.createElement("div");
+  partForm.classList.add('ui', 'input','focus');
+  partForm.id = "actionTag" + actTagCounter + "Form";
+  partForm.innerHTML = '<input type="text" id="actionTag' + actTagCounter + '" placeholder="Tag ' + actTagCounter + '">';
+  sectionDiv.append(partForm);
+}
+
+function removeActTag() {
+  var sectionDiv;
+  var tempSecDiv;
+  if (actTagCounter >= 0)
+        tempSecDiv = "actionTag" + actTagCounter + "Form";
+  sectionDiv = document.getElementById(tempSecDiv);
+  sectionDiv.remove();
+
+  actTagCounter--;
 }

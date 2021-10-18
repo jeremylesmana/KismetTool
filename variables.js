@@ -15,4 +15,5 @@ var locEachTurn = "";
 var locToggle = false;
 
 var locations = ["Library", "Bar", "Zoo"];
+var participants = ["Worker", "Student", "Driver"];
 //action variables
