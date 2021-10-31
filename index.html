@@ -1,3 +1,13 @@
+<!-- General guide for this Kismet Code HMTL
+Originally started by Jeremy Lesmana as a senior project
+for Prof. Adam Summerville, Fall 2021.
+
+UI and Theming: Semantic UI 2.4
+Functionalities: JQuery & Vanilla Javascript
+
+General notes: All classes here used in the div's are mainly from Semantic UI for theming purposes
+General work has been towards the ACTION functionalities of this Kismet Authoring Tool.
+-->
 <html>
 <head>
   <!-- This is Semantic UI and JQuery library -->
@@ -15,7 +25,7 @@
 
 <body>
   <br>
-  <div class="ui raised text container segment center aligned">
+  <div class="ui raised container segment center aligned">
     <h1 class="ui header">Kismet Tool</h1><br>
     <p>Visual authoring editor:</p>
 
@@ -47,107 +57,119 @@
 
       <!-- START Action Stuff Here-->
       <div id="actionDiv" class="ui raised segment left aligned">
-        <span>Action name:</span>
-        <div class="ui input focus">
-          <input type="text" id="actionName" placeholder="Action name...">
-        </div><br><br>
+        <div class="ui equal width two column stackable grid">
+          <div class="column"> <!-- here is the first column for action part-->
 
-        <!-- action parameters start here-->
-        <span>Action Parameters:</span> 
-        <select class="ui dropdown" id="actParamDrop" onchange="actParamChange(this.value)">
-          <option value="0">Select Parameter</option>
-          <option value="1">Participant</option>
-          <option value="2">Location</option>
-          <option value="3">Event</option>
-        </select>
-        <button class="ui green icon button mini" onclick="addParam()"><i class="plus icon"></i></button>
-        <br>
-        <!-- Here begins the diferent boxes for actions parameters-->
+            <span><b>Action name:</b></span>
+            <div class="ui input focus">
+              <input type="text" id="actionName" placeholder="Action name...">
+            </div><br><br>
 
-        <!-- Participant adding starts here-->
-        <div id="actParamAddPartBox" class="ui raised segment left aligned">
-          Participant:
-          <div class="ui input focus">
-            <input type="text" id="actParamAddPartName" placeholder="Participant name..." list="actPartDropdown">
+            <!-- action parameters start here-->
+            <span><b>Action Parameters:</b></span> 
+            <select class="ui dropdown" id="actParamDrop" onchange="actParamChange(this.value)">
+              <option value="0">Select Parameter</option>
+              <option value="1">Participant</option>
+              <option value="2">Location</option>
+              <option value="3">Event</option>
+            </select>
+            <button class="ui green icon button mini" onclick="addParam()"><i class="plus icon"></i></button>
+            <br>
+            <!-- Here begins the diferent boxes for actions parameters-->
+
+            <!-- Participant adding starts here-->
+            <div id="actParamAddPartBox" class="ui raised segment left aligned">
+              Participant:
+              <div class="ui input focus">
+                <input type="text" id="actParamAddPartName" placeholder="Participant name..." list="actPartDropdown">
+              </div><br><br>
+              Sign:
+              <select class="ui dropdown" id="actParamAddPartType">
+                <option value="0">> ENACTOR</option>
+                <option value="1">< TARGET</option>
+                <option value="2">^ SUBJECT</option>
+              </select><br><br>
+              Role:
+              <div class="ui input focus">
+                <input type="text" size="12" id="actParamAddPartRole" placeholder="Role" list="actRoleDropdown">
+              </div>
+            </div>
+            <!-- Participant adding ends here-->
+            
+            <!-- Location adding starts here-->
+            <div id="actParamAddLocBox" class="ui raised segment left aligned">
+              Location:
+              <div class="ui input focus">
+                <input type="text" id="actParamAddLoc" placeholder="Location name..." list="actLocDropdown">
+              </div>
+            </div>
+            <!-- Location adding ends here-->
+
+            <!-- Event adding starts here-->
+            <div id="actParamAddEventBox" class="ui raised segment left aligned">
+              Event:
+              <div class="ui input focus">
+                <input type="text" id="actParamAddEvent" placeholder="Event name...">
+              </div>
+            </div><br>
+            <!-- Event adding ends here-->
+            
+            <b>Current Existing Parameters:</b>
+            <div id="actParameterList">
+              
+            </div>
+            <br>
+            <!-- action tags start here-->
+            <span>Tags:</span>
+            <button class="ui green icon button mini" onclick="addActTag()"><i class="plus icon"></i></button>
+            <button class="ui red icon button mini" onclick="removeActTag()"><i class="minus icon"></i></button>
+            <br><br>
+
+            <div id="actionTagDiv">
+              <!--Here is one input form -->
+              <div class="ui input focus" id="actionTag1Form">
+                <input type="text" id="actionTag1" placeholder="Tag 1">
+              </div>
+
+            </div>
+            <br><br>
           </div>
-          &nbsp;&nbsp;Sign:
-          <select class="ui dropdown" id="actParamAddPartType">
-            <option value="0">> ENACTOR</option>
-            <option value="1">< TARGET</option>
-            <option value="2">^ SUBJECT</option>
-          </select>
-          &nbsp;&nbsp;Role:
-          <div class="ui input focus">
-            <input type="text" size="12" id="actParamAddPartRole" placeholder="Role" list="actRoleDropdown">
+          <div class="column"> <!-- here is the second column for action part-->
+            <span><b>Location Parameters:</b></span>
+            <button class="ui green icon button mini" onclick="addActLoc()"><i class="plus icon"></i></button>
+            <button class="ui red icon button mini" onclick="remActLoc()"><i class="minus icon"></i></button>
+            <br>
+            <!-- Here begins one single location box -->
+            <div id="locationBoxes"></div>
+            <!-- Here ends the location box-->
+
+            
+            <!-- Here are the datalists that'll be populated with the options-->
+            <datalist id="actLocDropdown"></datalist>
+            <datalist id="actPartDropdown"></datalist>
+            <br>
+
+            <!-- conditions stuff starts here-->
+            <span><b>Conditions:</b></span>
+            
+            <button class="ui green icon button mini" onclick="addFields('actCond')"><i class="plus icon"></i></button>
+            <br><br>
+            <select class="ui dropdown" style="font-size: 16px;">
+              <option value="0">Select a condiiton</option>
+              <option value="1">[Participant]‘s [Status] [Comparator] [#]</option>
+              <option value="2">[Participant]‘s [Status] [Comparator] [Participant]‘s [Status]</option>
+              <option value="3">[Participant]‘s [Knows] [Event]</option>
+              <option value="4">[Participant] [is/isn't] [Status]</option>
+              <option value="5">[Participant] and [Participant] [do/don't] [Status] each other</option>
+              <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
+              <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
+              <option value="8">[Pattern] [Participant/Event/Location]+</option>
+            </select>
+            <!-- condition stuff ends here-->
+            <br><br><br>
+            <button class="ui green button mini" onclick="actionSubmit()">Initialize</button>
           </div>
         </div>
-        <!-- Participant adding ends here-->
-        
-        <!-- Location adding starts here-->
-        <div id="actParamAddLocBox" class="ui raised segment left aligned">
-          Location:
-          <div class="ui input focus">
-            <input type="text" id="actParamAddLoc" placeholder="Location name..." list="actLocDropdown">
-          </div>
-        </div>
-        <!-- Location adding ends here-->
-
-        <!-- Event adding starts here-->
-        <div id="actParamAddEventBox" class="ui raised segment left aligned">
-          Event:
-          <div class="ui input focus">
-            <input type="text" id="actParamAddEvent" placeholder="Event name...">
-          </div>
-        </div>
-        <!-- Event adding ends here-->
-        
-        <b>Current Existing Parameters:</b>
-        <div id="actParameterList">
-           
-        </div>
-        <br>
-        <!-- action tags start here-->
-        <span>Tags:</span>
-        <button class="ui green icon button mini" onclick="addActTag()"><i class="plus icon"></i></button>
-        <button class="ui red icon button mini" onclick="removeActTag()"><i class="minus icon"></i></button>
-        <br><br>
-
-        <div id="actionTagDiv">
-          <!--Here is one input form -->
-          <div class="ui input focus" id="actionTag1Form">
-            <input type="text" id="actionTag1" placeholder="Tag 1">
-          </div>
-
-        </div>
-        <br><br>
-
-        <span>Location Parameters:</span>
-        <button class="ui green icon button mini" onclick="addActLoc()"><i class="plus icon"></i></button>
-        <button class="ui red icon button mini" onclick="remActLoc()"><i class="minus icon"></i></button>
-        <br>
-        <!-- Here begins one single location box -->
-        <div id="locationBoxes"></div>
-        <!-- Here ends the location box-->
-
-        
-        <!-- Here are the datalists that'll be populated with the options-->
-        <datalist id="actLocDropdown"></datalist>
-        <datalist id="actPartDropdown"></datalist>
-        <br>
-
-        <!-- conditions stuff starts here-->
-        <span>Conditions:</span>
-        
-        <button class="ui green icon button mini" onclick="addFields('actCond')"><i class="plus icon"></i></button>
-        <br><br>
-        <select class="ui dropdown" style="font-size: 16px;">
-          <option value="0">[Participant]‘s [Trait] [Comparator] [#]</option>
-          <option value="1">[Participant]‘s [Trait] [Comparator] [Participant]‘s [Trait]</option>
-          <option value="2">[Participant]‘s [Knows] [Event]</option>
-        </select>
-        <!-- condition stuff ends here-->
-        <br><br><br>
-        <button class="ui green button mini" onclick="actionSubmit()">Initialize</button>
       </div>
       <!-- END Action Stuff Here-->
     <br><br>
