@@ -154,8 +154,8 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
             
             <button class="ui green icon button mini" onclick="addFields('actCond')"><i class="plus icon"></i></button>
             <br><br>
-            <select class="ui dropdown" style="font-size: 16px;">
-              <option value="0">Select a condiiton</option>
+            <select id="actCondSelect" class="ui dropdown" style="font-size: 16px;">
+              <option value="0">Select a condition</option>
               <option value="1">[Participant]‘s [Status] [Comparator] [#]</option>
               <option value="2">[Participant]‘s [Status] [Comparator] [Participant]‘s [Status]</option>
               <option value="3">[Participant]‘s [Knows] [Event]</option>
@@ -164,7 +164,55 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
               <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
               <option value="8">[Pattern] [Participant/Event/Location]+</option>
-            </select>
+            </select><br><br>
+
+            <!-- the condition boxes go here-->
+
+              <!-- Condition Box #1-->
+              <div class="ui raised segment left aligned" id="actConditionBox1">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox1Part" placeholder="Participant's" size="13" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox1Status" placeholder="Status" size="8" list="actStatusDropdown">
+                </div>
+                <select id="conditionBox1Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="!=">!=</option>
+                  <option value=">">></option>
+                  <option value="<"><</option>
+                  <option value=">=">>=</option>
+                  <option value="<="><=</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="number" id="conditionBox1Number" placeholder="Number" style="width: 100px;">
+                </div>
+              </div>
+
+              <!-- Condition Box #2-->
+              <div class="ui raised segment left aligned" id="actConditionBox2">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox2Part1" placeholder="Participant's" size="12" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox2Status1" placeholder="Status" size="7" list="actStatusDropdown">
+                </div>
+                <select id="conditionBox1Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="!=">!=</option>
+                  <option value=">">></option>
+                  <option value="<"><</option>
+                  <option value=">=">>=</option>
+                  <option value="<="><=</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox2Part2" placeholder="Participant's" size="12" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox2Status2" placeholder="Status" size="7" list="actStatusDropdown">
+                </div>
+              </div>
+
             <!-- condition stuff ends here-->
             <br><br><br>
             <button class="ui green button mini" onclick="actionSubmit()">Initialize</button>
