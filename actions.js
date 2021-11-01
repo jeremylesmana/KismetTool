@@ -13,11 +13,14 @@ var actParamCounter = 0;
 
 $(document).ready(function(){
 
-  updateLocList();
-  updatePartList();
-  $("#actParamAddPartBox").hide();
-  $("#actParamAddLocBox").hide();
-  $("#actParamAddEventBox").hide();
+	//All the stuff that happens where when the document loads
+	updateLocList();
+	updatePartList();
+	$("#actParamAddPartBox").hide();
+	$("#actParamAddLocBox").hide();
+	$("#actParamAddEventBox").hide();
+	hideConditionBoxes();
+	
 });
 
 function actionSubmit() {
@@ -294,4 +297,20 @@ function removeActTag() {
   sectionDiv.remove();
 
   actTagCounter--;
+}
+
+function actConditionBoxChange(input) {
+	hideConditionBoxes();	//Hide all the boxes
+	
+	boxID = "actConditionBox" + input;
+	currentBox = document.getElementById(boxID);
+	$(currentBox).show();
+}
+
+function hideConditionBoxes() {
+	for(var i = 0; i <= 8; i++){
+		boxID = "actConditionBox" + i;
+		currentBox = document.getElementById(boxID);
+		$(currentBox).hide();
+	}
 }

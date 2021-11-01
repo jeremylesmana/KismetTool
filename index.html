@@ -109,7 +109,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
             <div id="actParamAddEventBox" class="ui raised segment left aligned">
               Event:
               <div class="ui input focus">
-                <input type="text" id="actParamAddEvent" placeholder="Event name...">
+                <input type="text" id="actParamAddEvent" placeholder="Event name..." list="actEventDropdown">
               </div>
             </div><br>
             <!-- Event adding ends here-->
@@ -154,7 +154,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
             
             <button class="ui green icon button mini" onclick="addFields('actCond')"><i class="plus icon"></i></button>
             <br><br>
-            <select id="actCondSelect" class="ui dropdown" style="font-size: 16px;">
+            <select id="actCondSelect" class="ui dropdown" style="font-size: 16px;" onchange="actConditionBoxChange(this.value)">
               <option value="0">Select a condition</option>
               <option value="1">[Participant]‘s [Status] [Comparator] [#]</option>
               <option value="2">[Participant]‘s [Status] [Comparator] [Participant]‘s [Status]</option>
@@ -192,12 +192,12 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <!-- Condition Box #2-->
               <div class="ui raised segment left aligned" id="actConditionBox2">
                 <div class="ui input focus">
-                  <input type="text" id="conditionBox2Part1" placeholder="Participant's" size="12" list="actPartDropdown">
+                  <input type="text" id="conditionBox2Part1" placeholder="Participant's" size="10" list="actPartDropdown">
                 </div>
                 <div class="ui input focus">
-                  <input type="text" id="conditionBox2Status1" placeholder="Status" size="7" list="actStatusDropdown">
+                  <input type="text" id="conditionBox2Status1" placeholder="Status" size="5" list="actStatusDropdown">
                 </div>
-                <select id="conditionBox1Comparator" class="ui dropdown">
+                <select id="conditionBox2Comparator" class="ui dropdown">
                   <option value="=">=</option>
                   <option value="!=">!=</option>
                   <option value=">">></option>
@@ -206,10 +206,116 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                   <option value="<="><=</option>
                 </select>
                 <div class="ui input focus">
-                  <input type="text" id="conditionBox2Part2" placeholder="Participant's" size="12" list="actPartDropdown">
+                  <input type="text" id="conditionBox2Part2" placeholder="Participant's" size="10" list="actPartDropdown">
                 </div>
                 <div class="ui input focus">
-                  <input type="text" id="conditionBox2Status2" placeholder="Status" size="7" list="actStatusDropdown">
+                  <input type="text" id="conditionBox2Status2" placeholder="Status" size="5" list="actStatusDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Condition Box #3-->
+              <div class="ui raised segment left aligned" id="actConditionBox3">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox3Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+                <select id="conditionBox3Knows" class="ui dropdown">
+                  <option value="knows">knows</option>
+                  <option value="did">did</option>
+                  <option value="received">received</option>
+                  <option value="heard">heard</option>
+                  <option value="saw">saw</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox3Event" placeholder="Event" size="13" list="actEventDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Condition Box #4-->
+              <div class="ui raised segment left aligned" id="actConditionBox4">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox4Part" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+                <select id="conditionBox4IsIsnt" class="ui dropdown">
+                  <option value="is">is</option>
+                  <option value="isnt">isn't</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox4Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Condition Box #5-->
+              <div class="ui raised segment left aligned" id="actConditionBox5">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox5Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				&nbsp;&nbsp;and	&nbsp;&nbsp;
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox5Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div><br><br>
+                <select id="conditionBox5DoDont" class="ui dropdown">
+                  <option value="do">do</option>
+                  <option value="dont">don't</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox5Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div> each other. 
+              </div>
+			  
+			  <!-- Condition Box #6-->
+              <div class="ui raised segment left aligned" id="actConditionBox6">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox6Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				<select id="conditionBox6IsIsnt" class="ui dropdown">
+                  <option value="is">is</option>
+                  <option value="isnt">isn't</option>
+                </select>
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox6Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div>
+                with
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox6Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Condition Box #7-->
+              <div class="ui raised segment left aligned" id="actConditionBox7">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox7Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox7Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div><br> with 
+				
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox7Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				
+				<select id="conditionBox7Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="!=">!=</option>
+                  <option value=">">></option>
+                  <option value="<"><</option>
+                  <option value=">=">>=</option>
+                  <option value="<="><=</option>
+                </select>
+				
+				<div class="ui input focus">
+                  <input type="number" id="conditionBox7Number" placeholder="Number" style="width: 100px;">
+                </div>
+              </div>
+			  
+			  <!-- Condition Box #8-->
+              <div class="ui raised segment left aligned" id="actConditionBox8">
+                <div class="ui input focus">
+                  <input type="text" id="conditionBox8Pattern" placeholder="Pattern..." size="13" list="actPatternDropdown">
+                </div>
+				
+				<div class="ui input focus">
+                  <input type="text" id="conditionBox8PartEventLocation" placeholder="Participant/Event/Location" size="25" list="actStatusDropdown">
                 </div>
               </div>
 
