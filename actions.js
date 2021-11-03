@@ -1,15 +1,17 @@
 var actName = "";
-var actParts = new Array();
-var actPartCounter = 1;
+var actParts = [];
 var actTagCounter = 1;
-var actCondCounter = 1;
 
 var actToggle = false;
 var actLocCounter = 0;
-// + actLocCounter +
 
-var actParamArray = new Array();
+var actParamArray = [];
 var actParamCounter = 0;
+
+var actConditionArray = [];
+var actConditionCounter = 0;
+
+function byId(id) { return document.getElementById(id); }
 
 $(document).ready(function(){
 
@@ -24,14 +26,14 @@ $(document).ready(function(){
 });
 
 function actionSubmit() {
-  actionName = document.getElementById("actionName").value;
+  actionName = byId("actionName").value;
   actionName = actionName.replace(" ", "-");
-  actionLocation = document.getElementById("actionLocation").value;
+  actionLocation = byId("actionLocation").value;
 
   combinedActionTag = "";
   for (let i=1; i<= actTagCounter; i++){
     actionTagCurID = "actionTag" + i;
-    actionTagCurrent = document.getElementById(actionTagCurID).value;
+    actionTagCurrent = byId(actionTagCurID).value;
     combinedActionTag = combinedActionTag + actionTagCurrent + ",";
   }
   combinedActionTag = combinedActionTag.slice(0,-1);
@@ -45,7 +47,7 @@ function actionSubmit() {
 
 function updateLocList() {
   //Populate location select with location array elements
-  locationSelect = document.getElementById("actLocDropdown");
+  locationSelect = byId("actLocDropdown");
   locationSelect.innerHTML = '';
 
       for (var i = 0; i < locations.length; i++) {
@@ -56,7 +58,7 @@ function updateLocList() {
 }
 function updatePartList() {
   //Populate location select with location array elements
-  participantSelect = document.getElementById("actPartDropdown");
+  participantSelect = byId("actPartDropdown");
   participantSelect.innerHTML = '';
 
       for (var i = 0; i < participants.length; i++) {
@@ -93,7 +95,7 @@ function tempLocationDel() {
 
 function wildCheck(x) {
   disabledID = "actLocType" + x;
-  disableElement = document.getElementById(disabledID);
+  disableElement = byId(disabledID);
   if(!disableElement.disabled) {
     disableElement.disabled = true;
     disableElement.value = "";
@@ -123,12 +125,12 @@ function addActLoc () {
   <div class='ui input focus'>\
     <input type='text' placeholder='Participant...'' id='actLocPart" + actLocCounter + "' list='actPartDropdown' onfocusout='locPartField(this.value)'>\
   </div><br><br>";
-  document.getElementById("locationBoxes").appendChild(locationBox);
+  byId("locationBoxes").appendChild(locationBox);
 }
 
 function remActLoc() {
   boxID = "actLocBox" + actLocCounter;
-  locationBox = document.getElementById(boxID);
+  locationBox = byId(boxID);
   locationBox.remove();
 
   if(actLocCounter > 0) {
@@ -155,24 +157,24 @@ function actParamChange(x) {
 }
 
 function addParam() {
-  let paramDropdown = document.getElementById("actParamDrop");
+  let paramDropdown = byId("actParamDrop");
 
-  let partName = document.getElementById("actParamAddPartName");
-  let partSign = document.getElementById("actParamAddPartType");
-  let partRole = document.getElementById("actParamAddPartRole");
-  let locName = document.getElementById("actParamAddLoc");
-  let eventName = document.getElementById("actParamAddEvent");
+  let partName = byId("actParamAddPartName");
+  let partSign = byId("actParamAddPartType");
+  let partRole = byId("actParamAddPartRole");
+  let locName = byId("actParamAddLoc");
+  let eventName = byId("actParamAddEvent");
 
   if(paramDropdown.value == "1") {
     if(partName.value == "") 
       alert("You didn't enter anything for the participant name");
      else {
        newParameter = {
-          id: actParamCounter,
-          type: "part",
-          name: partName.value,
-          sign: partSign.value,
-          role: partRole.value
+          "id": actParamCounter,
+          "type": "part",
+          "name": partName.value,
+          "sign": partSign.value,
+          "role": partRole.value
       }
        
        actParamArray.push(newParameter);
@@ -190,9 +192,9 @@ function addParam() {
     }
     else {
       newParameter = {
-        id: actParamCounter,
-        type: "location",
-        name: locName.value
+        "id": actParamCounter,
+        "type": "location",
+        "name": locName.value
       }
       actParamArray.push(newParameter);
       updateParameterList();
@@ -206,9 +208,9 @@ function addParam() {
 
     else {
       newParameter = {
-        id: actParamCounter,
-        type: "event",
-        name: eventName.value
+        "id": actParamCounter,
+        "type": "event",
+        "name": eventName.value
       }
       actParamArray.push(newParameter);
       updateParameterList();
@@ -219,7 +221,7 @@ function addParam() {
 }
 
 function updateParameterList() {
-  let paramListDiv = document.getElementById("actParameterList");
+  let paramListDiv = byId("actParameterList");
   paramListDiv.innerHTML = "";
   //Clear existing list of tables already.
 
@@ -279,7 +281,7 @@ function addActTag() {
   var sectionDiv;
   if(actTagCounter >= 0) {
     actTagCounter = actTagCounter + 1;
-    sectionDiv = document.getElementById("actionTagDiv");
+    sectionDiv = byId("actionTagDiv");
   }
   partForm = document.createElement("div");
   partForm.classList.add('ui', 'input','focus');
@@ -293,7 +295,7 @@ function removeActTag() {
   var tempSecDiv;
   if (actTagCounter >= 0)
         tempSecDiv = "actionTag" + actTagCounter + "Form";
-  sectionDiv = document.getElementById(tempSecDiv);
+  sectionDiv = byId(tempSecDiv);
   sectionDiv.remove();
 
   actTagCounter--;
@@ -303,14 +305,150 @@ function actConditionBoxChange(input) {
 	hideConditionBoxes();	//Hide all the boxes
 	
 	boxID = "actConditionBox" + input;
-	currentBox = document.getElementById(boxID);
+	currentBox = byId(boxID);
 	$(currentBox).show();
 }
 
 function hideConditionBoxes() {
 	for(var i = 0; i <= 8; i++){
 		boxID = "actConditionBox" + i;
-		currentBox = document.getElementById(boxID);
+		currentBox = byId(boxID);
 		$(currentBox).hide();
 	}
+}
+
+function addCondition() {
+  var condValue = byId("actCondSelect").value;
+
+  switch(condValue) {
+    case '0':
+      alert("You didn't select a condition");
+      break;
+
+    case '1':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 1,
+        "part": byId("conditionBox1Part").value,
+        "status": byId("conditionBox1Status").value,
+        "comparator": byId("conditionBox1Comparator").value,
+        "number": byId("conditionBox1Number").value
+      });
+      byId("conditionBox1Part").value = "";
+      byId("conditionBox1Status").value = "";
+      byId("conditionBox1Comparator").value = "=";
+      byId("conditionBox1Number").value = "";
+      break;
+
+      case '2':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 2,
+        "part1": byId("conditionBox2Part1").value,
+        "status1": byId("conditionBox2Status1").value,
+        "comparator": byId("conditionBox2Comparator").value,
+        "part2": byId("conditionBox2Part2").value,
+        "status2": byId("conditionBox2Status2").value,
+      });
+      byId("conditionBox2Part1").value = "";
+      byId("conitionBox2Status1").value = "";
+      byId("conditionBox2Comparator").value = "";
+      byId("conditionBox2Part2").value = "";
+      byId("conditionBox2Status2").value = "";
+      break;
+
+      case '3':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 3,
+        "part": byId("conditionBox3Part").value,
+        "knows": byId("conditionBox3Knows").value,
+        "event": byId("conditionBox3Event").value,
+      });
+      byId("conditionBox3Part").value = "";
+      byId("conditionBox3Knows").value = "knows";
+      byId("conditionBox3Event").value = "";
+      break;
+
+      case '4':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 4,
+        "part": byId("conditionBox4Part").value,
+        "isisnt": byId("conditionBox4IsIsnt").value,
+        "status": byId("conditionBox4Status").value,
+      });
+      byId("conditionBox4Part").value = "";
+      byId("conditionBox4IsIsnt").value = "is";
+      byId("conditionBox4Status").value = "";
+      break;
+
+      case '5':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 5,
+        "part1": byId("conditionBox5Part1").value,
+        "part2": byId("conditionBox5Part2").value,
+        "dodont": byId("conditionBox5DoDont").value,
+        "status": byId("conditionBox5Status").value,
+      });
+      byId("conditionBox5Part1").value = "";
+      byId("conditionBox5Part2").value = "";
+      byId("conditionBox5Status").value = "";
+      byId("conditionBox5DoDont").value = "do";
+      break;
+
+      case '6':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 6,
+        "part1": byId("conditionBox6Part1").value,
+        "isisnt": byId("conditionBox6IsIsnt").value,
+        "status": byId("conditionBox6Status").value,
+        "part2": byId("conditionBox6Part2").value,
+      });
+      byId("conditionBox6Part1").value = "";
+      byId("conditionBox6IsIsnt").value = "is";
+      byId("conditionBox6Status").value = "";
+      byId("conditionBox6Part2").value = "";
+      break;
+      
+      case '7':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 7,
+        "part1": byId("conditionBox7Part1").value,
+        "status": byId("conditionBox7Status").value,
+        "part2": byId("conditionBox7Part2").value,
+        "comparator": byId("conditionBox7Comparator").value,
+        "number": byId("conditionBox7Number").value,
+      });
+      byId("conditionBox7Part1").value = "";
+      byId("conditionBox7Status").value = "";
+      byId("conditionBox7Part2").value = "";
+      byId("conditionBox7Comparator").value = "=";
+      byId("conditionBox7Number").value = "";
+      break;
+
+      case '8':
+      actConditionCounter++;
+      actConditionArray.push({
+        "id": actConditionCounter,
+        "type": 8,
+        "pattern": byId("conditionBox8Pattern").value,
+        "parteventlocation": byId("conditionBox8PartEventLocation").value,
+      });
+      byId("conditionBox8Pattern").value = "";
+      byId("conditionBox8PartEventLocation").value = "";
+      break;
+
+  }
+  
 }

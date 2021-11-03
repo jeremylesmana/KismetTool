@@ -1,0 +1,5 @@
+Result = every condition except pattern
+
+Instead of comparator, it becomes =, +=, -=
+
+Knows: knows / heard

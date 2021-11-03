@@ -152,7 +152,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
             <!-- conditions stuff starts here-->
             <span><b>Conditions:</b></span>
             
-            <button class="ui green icon button mini" onclick="addFields('actCond')"><i class="plus icon"></i></button>
+            <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i></button>
             <br><br>
             <select id="actCondSelect" class="ui dropdown" style="font-size: 16px;" onchange="actConditionBoxChange(this.value)">
               <option value="0">Select a condition</option>
@@ -164,7 +164,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
               <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
               <option value="8">[Pattern] [Participant/Event/Location]+</option>
-            </select><br><br>
+            </select><br>
 
             <!-- the condition boxes go here-->
 
@@ -216,7 +216,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
 			  <!-- Condition Box #3-->
               <div class="ui raised segment left aligned" id="actConditionBox3">
                 <div class="ui input focus">
-                  <input type="text" id="conditionBox3Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                  <input type="text" id="conditionBox3Part" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
                 <select id="conditionBox3Knows" class="ui dropdown">
                   <option value="knows">knows</option>
@@ -250,7 +250,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                   <input type="text" id="conditionBox5Part1" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
 				&nbsp;&nbsp;and	&nbsp;&nbsp;
-				<div class="ui input focus">
+			        	<div class="ui input focus">
                   <input type="text" id="conditionBox5Part2" placeholder="Participant" size="13" list="actPartDropdown">
                 </div><br><br>
                 <select id="conditionBox5DoDont" class="ui dropdown">
@@ -267,15 +267,15 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                 <div class="ui input focus">
                   <input type="text" id="conditionBox6Part1" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
-				<select id="conditionBox6IsIsnt" class="ui dropdown">
+			        	<select id="conditionBox6IsIsnt" class="ui dropdown">
                   <option value="is">is</option>
                   <option value="isnt">isn't</option>
                 </select>
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="text" id="conditionBox6Status" placeholder="Status" size="10" list="actStatusDropdown">
                 </div>
                 with
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="text" id="conditionBox6Part2" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
               </div>
@@ -286,15 +286,15 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                   <input type="text" id="conditionBox7Part1" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
 				
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="text" id="conditionBox7Status" placeholder="Status" size="10" list="actStatusDropdown">
                 </div><br> with 
 				
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="text" id="conditionBox7Part2" placeholder="Participant" size="13" list="actPartDropdown">
                 </div>
 				
-				<select id="conditionBox7Comparator" class="ui dropdown">
+				        <select id="conditionBox7Comparator" class="ui dropdown">
                   <option value="=">=</option>
                   <option value="!=">!=</option>
                   <option value=">">></option>
@@ -303,7 +303,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                   <option value="<="><=</option>
                 </select>
 				
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="number" id="conditionBox7Number" placeholder="Number" style="width: 100px;">
                 </div>
               </div>
@@ -314,7 +314,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                   <input type="text" id="conditionBox8Pattern" placeholder="Pattern..." size="13" list="actPatternDropdown">
                 </div>
 				
-				<div class="ui input focus">
+				        <div class="ui input focus">
                   <input type="text" id="conditionBox8PartEventLocation" placeholder="Participant/Event/Location" size="25" list="actStatusDropdown">
                 </div>
               </div>
