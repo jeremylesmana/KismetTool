@@ -11,6 +11,7 @@ var actParamCounter = 0;
 var actConditionArray = [];
 var actConditionCounter = 0;
 
+var indent = "   ";
 function byId(id) { return document.getElementById(id); }
 
 $(document).ready(function(){
@@ -353,7 +354,7 @@ function addCondition() {
         "status2": byId("conditionBox2Status2").value,
       });
       byId("conditionBox2Part1").value = "";
-      byId("conitionBox2Status1").value = "";
+      byId("conditionBox2Status1").value = "";
       byId("conditionBox2Comparator").value = "";
       byId("conditionBox2Part2").value = "";
       byId("conditionBox2Status2").value = "";
@@ -450,5 +451,44 @@ function addCondition() {
       break;
 
   }
+  updateConditionList();
   
+}
+
+function updateConditionList() {
+  let condListDiv = byId("actConditionList");
+  condListDiv.innerHTML = "";
+  for(var i = 0; i < actConditionArray.length; i++) {
+
+    var condType = actConditionArray[i].type; //Setting condType to whatever that element's type is
+
+    let newDiv = document.createElement("div"); //Make new element here to be implemented later
+    newDiv.classList.add("ui", "raised","segment","left","aligned");
+    tempHTML = "<button class='ui red icon button mini' onclick='removeCondition("+actConditionArray[i].id+")'>\
+    <i class='minus icon'></i>\
+  </button>";
+
+    switch (condType) {
+      case 1:
+        tempHTML = tempHTML + "<span style='font-size:16px;'>\
+        " +actConditionArray[i].part + "'s " + actConditionArray[i].status + " is " + actConditionArray[i].comparator + " " + actConditionArray[i].number + "</span>";
+        break;
+      case 2:
+        tempHTML = tempHTML + "<span style='font-size:16px;'>\
+        " +actConditionArray[i].part1 + "'s " + actConditionArray[i].status1 + " is " + actConditionArray[i].comparator + " " + actConditionArray[i].part2 + "'s " + actConditionArray[i].status2 + "</span>";
+        break;
+    }
+
+    newDiv.innerHTML = tempHTML;
+    condListDiv.appendChild(newDiv);
+  }
+}
+
+function removeCondition(removeID) {
+  for (var i = 0; i < actConditionArray.length; i++) {
+    if (actConditionArray[i].id == removeID) {
+      actConditionArray.splice(i, 1);
+      updateConditionList();
+    }
+  }
 }
