@@ -319,9 +319,9 @@ function hideConditionBoxes() {
 }
 
 function addCondition() {
-  var condValue = byId("actCondSelect").value;
+  var conditionValue = byId("actConditionSelect").value;
 
-  switch(condValue) {
+  switch(conditionValue) {
     case '0':
       alert("You didn't select a condition");
       break;
@@ -456,31 +456,67 @@ function addCondition() {
 }
 
 function updateConditionList() {
-  let condListDiv = byId("actConditionList");
-  condListDiv.innerHTML = "";
+  let conditionListDiv = byId("actConditionList");
+  conditionListDiv.innerHTML = "";
   for(var i = 0; i < actConditionArray.length; i++) {
 
-    var condType = actConditionArray[i].type; //Setting condType to whatever that element's type is
-
+    var conditionType = actConditionArray[i].type; //Setting condType to whatever that element's type is
+    var conditionID = actConditionArray[i].id;
     let newDiv = document.createElement("div"); //Make new element here to be implemented later
     newDiv.classList.add("ui", "raised","segment","left","aligned");
-    tempHTML = "<button class='ui red icon button mini' onclick='removeCondition("+actConditionArray[i].id+")'>\
-    <i class='minus icon'></i>\
-  </button>";
-
-    switch (condType) {
+    newDiv.style.backgroundColor = "#bdbdbd";
+    switch (conditionType) {
       case 1:
-        tempHTML = tempHTML + "<span style='font-size:16px;'>\
-        " +actConditionArray[i].part + "'s " + actConditionArray[i].status + " is " + actConditionArray[i].comparator + " " + actConditionArray[i].number + "</span>";
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part', this.value)\" value=\"" + actConditionArray[i].part + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status + "\" size=\"8\" list=\"actStatusDropdown\">" + 
+        "</div>" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'Comparator', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"=\">=</option>" + 
+        "  <option value=\"!=\">!=</option>" + 
+        "  <option value=\">\">></option>" + 
+        "  <option value=\"<\"><</option>" + 
+        "  <option value=\">=\">>=</option>" + 
+        "  <option value=\"<=\"><=</option>" + 
+        "</select>" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"number\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Number', this.value)\" value=\"" + actConditionArray[i].number + "\" style=\"width: 100px;\">" + 
+        "</div>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].comparator;
         break;
-      case 2:
-        tempHTML = tempHTML + "<span style='font-size:16px;'>\
-        " +actConditionArray[i].part1 + "'s " + actConditionArray[i].status1 + " is " + actConditionArray[i].comparator + " " + actConditionArray[i].part2 + "'s " + actConditionArray[i].status2 + "</span>";
-        break;
-    }
 
-    newDiv.innerHTML = tempHTML;
-    condListDiv.appendChild(newDiv);
+      case 2:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "                  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part1', this.value)\" value=\"" + actConditionArray[i].part1 + "\" size=\"10\" list=\"actPartDropdown\">" + 
+        "                </div>" + 
+        "                <div class=\"ui input focus\">" + 
+        "                  <input type=\"text\" id=\"conditionBox2Status1\" placeholder=\"Status\" size=\"5\" list=\"actStatusDropdown\">" + 
+        "                </div>" + 
+        "                <select id=\"conditionBox2Comparator\" class=\"ui dropdown\">" + 
+        "                  <option value=\"=\">=</option>" + 
+        "                  <option value=\"!=\">!=</option>" + 
+        "                  <option value=\">\">></option>" + 
+        "                  <option value=\"<\"><</option>" + 
+        "                  <option value=\">=\">>=</option>" + 
+        "                  <option value=\"<=\"><=</option>" + 
+        "                </select>" + 
+        "                <div class=\"ui input focus\">" + 
+        "                  <input type=\"text\" id=\"conditionBox2Part2\" placeholder=\"Participant's\" size=\"10\" list=\"actPartDropdown\">" + 
+        "                </div>" + 
+        "                <div class=\"ui input focus\">" + 
+        "                  <input type=\"text\" id=\"conditionBox2Status2\" placeholder=\"Status\" size=\"5\" list=\"actStatusDropdown\">" + 
+        "                </div>" +
+        "                <button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        conditionListDiv.appendChild(newDiv);
+        break;
+        
+    }
+    
   }
 }
 
@@ -488,7 +524,52 @@ function removeCondition(removeID) {
   for (var i = 0; i < actConditionArray.length; i++) {
     if (actConditionArray[i].id == removeID) {
       actConditionArray.splice(i, 1);
-      updateConditionList();
     }
   }
+  updateConditionList();
+}
+
+function conditionFocusOut(idNum, cond, val) {
+  switch(cond) {
+    case 'Part':
+      actConditionArray[idNum].part = val;
+      break;
+    case 'Status':
+      actConditionArray[idNum].status = val;
+      break;
+    case 'Comparator':
+      actConditionArray[idNum].comparator = val;
+      break;
+    case 'Number':
+      actConditionArray[idNum].comparator = val;
+      break;
+    case 'Part1':
+      actConditionArray[idNum].part1 = val;
+      break;
+    case 'Part2':
+      actConditionArray[idNum].part2 = val;
+      break;
+    case 'Status1':
+      actConditionArray[idNum].status1 = val;
+      break;
+    case 'Status2':
+      actConditionArray[idNum].status2 = val;
+      break;
+    case 'Knows':
+      actConditionArray[idNum].knows = val;
+      break;
+    case 'Event':
+      actConditionArray[idNum].event = val;
+      break;
+    case 'DoDont':
+      actConditionArray[idNum].dodont = val;
+      break;
+    case 'IsIsnt':
+      actConditionArray[idNum].isisnt = val;
+      break;
+    case 'Pattern':
+      actConditionArray[idNum].pattern = val;
+      break;
+  }
+  updateConditionList();
 }

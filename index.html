@@ -152,9 +152,9 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
             <!-- conditions stuff starts here-->
             <span><b>Conditions:</b></span>
             
-            <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i></button>
+            
             <br><br>
-            <select id="actCondSelect" class="ui dropdown" style="font-size: 16px;" onchange="actConditionBoxChange(this.value)">
+            <select id="actConditionSelect" class="ui dropdown" style="font-size: 16px;" onchange="actConditionBoxChange(this.value)">
               <option value="0">Select a condition</option>
               <option value="1">[Participant]‘s [Status] [Comparator] [#]</option>
               <option value="2">[Participant]‘s [Status] [Comparator] [Participant]‘s [Status]</option>
@@ -164,8 +164,8 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
               <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
               <option value="8">[Pattern] [Participant/Event/Location]+</option>
-            </select><br>
-
+            </select><br><br>
+            <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i> Add Condition</button>
             <!-- the condition boxes go here-->
 
               <!-- Condition Box #1-->
