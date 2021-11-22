@@ -51,7 +51,7 @@ function updateLocList() {
   locationSelect = byId("actLocDropdown");
   locationSelect.innerHTML = '';
 
-      for (var i = 0; i < locations.length; i++) {
+      for (let i = 0; i < locations.length; i++) {
         optionElement = document.createElement("option");
         optionElement.value = locations[i];
         locationSelect.appendChild(optionElement);
@@ -62,7 +62,7 @@ function updatePartList() {
   participantSelect = byId("actPartDropdown");
   participantSelect.innerHTML = '';
 
-      for (var i = 0; i < participants.length; i++) {
+      for (let i = 0; i < participants.length; i++) {
         optionElement = document.createElement("option");
         optionElement.value = participants[i];
         participantSelect.appendChild(optionElement);
@@ -226,7 +226,7 @@ function updateParameterList() {
   paramListDiv.innerHTML = "";
   //Clear existing list of tables already.
 
-  for (var i = 0; i < actParamArray.length; i++) {
+  for (let i = 0; i < actParamArray.length; i++) {
 
     if (actParamArray[i].type == "part") {
       let newDiv = document.createElement("div");
@@ -270,7 +270,7 @@ function updateParameterList() {
 }
 
 function removeParameter(removeID) {
-  for (var i = 0; i < actParamArray.length; i++) {
+  for (let i = 0; i < actParamArray.length; i++) {
     if (actParamArray[i].id == removeID) {
       actParamArray.splice(i, 1);
       updateParameterList();
@@ -311,7 +311,7 @@ function actConditionBoxChange(input) {
 }
 
 function hideConditionBoxes() {
-	for(var i = 0; i <= 8; i++){
+	for(let i = 0; i <= 8; i++){
 		boxID = "actConditionBox" + i;
 		currentBox = byId(boxID);
 		$(currentBox).hide();
@@ -444,10 +444,9 @@ function addCondition() {
         "id": actConditionCounter,
         "type": 8,
         "pattern": byId("conditionBox8Pattern").value,
-        "parteventlocation": byId("conditionBox8PartEventLocation").value,
+        "parteventlocation": [""],
       });
       byId("conditionBox8Pattern").value = "";
-      byId("conditionBox8PartEventLocation").value = "";
       break;
 
   }
@@ -458,7 +457,7 @@ function addCondition() {
 function updateConditionList() {
   let conditionListDiv = byId("actConditionList");
   conditionListDiv.innerHTML = "";
-  for(var i = 0; i < actConditionArray.length; i++) {
+  for(let i = 0; i < actConditionArray.length; i++) {
 
     var conditionType = actConditionArray[i].type; //Setting condType to whatever that element's type is
     var conditionID = actConditionArray[i].id;
@@ -495,9 +494,9 @@ function updateConditionList() {
         "                  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part1', this.value)\" value=\"" + actConditionArray[i].part1 + "\" size=\"10\" list=\"actPartDropdown\">" + 
         "                </div>" + 
         "                <div class=\"ui input focus\">" + 
-        "                  <input type=\"text\" id=\"conditionBox2Status1\" placeholder=\"Status\" size=\"5\" list=\"actStatusDropdown\">" + 
+        "                  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status1 + "\" size=\"5\" list=\"actStatusDropdown\">" + 
         "                </div>" + 
-        "                <select id=\"conditionBox2Comparator\" class=\"ui dropdown\">" + 
+        "                <select onfocusout=\"conditionFocusOut(" + conditionID + ", 'Comparator', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
         "                  <option value=\"=\">=</option>" + 
         "                  <option value=\"!=\">!=</option>" + 
         "                  <option value=\">\">></option>" + 
@@ -506,22 +505,168 @@ function updateConditionList() {
         "                  <option value=\"<=\"><=</option>" + 
         "                </select>" + 
         "                <div class=\"ui input focus\">" + 
-        "                  <input type=\"text\" id=\"conditionBox2Part2\" placeholder=\"Participant's\" size=\"10\" list=\"actPartDropdown\">" + 
+        "                  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part2', this.value)\" value=\"" + actConditionArray[i].part2 + "\" size=\"10\" list=\"actPartDropdown\">" + 
         "                </div>" + 
         "                <div class=\"ui input focus\">" + 
-        "                  <input type=\"text\" id=\"conditionBox2Status2\" placeholder=\"Status\" size=\"5\" list=\"actStatusDropdown\">" + 
+        "                  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status2', this.value)\" value=\"" + actConditionArray[i].status2 + "\" size=\"5\" list=\"actStatusDropdown\">" + 
         "                </div>" +
         "                <button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
-        conditionListDiv.appendChild(newDiv);
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].comparator;
+        break;
+
+        case 3:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part', this.value)\" value=\"" + actConditionArray[i].part + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'Knows', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"knows\">knows</option>" + 
+        "  <option value=\"did\">did</option>" + 
+        "  <option value=\"received\">received</option>" + 
+        "  <option value=\"heard\">heard</option>" + 
+        "  <option value=\"saw\">saw</option>" + 
+        "</select>" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Event', this.value)\" value=\"" + actConditionArray[i].event + "\" size=\"13\" list=\"actEventDropdown\">" + 
+        "</div>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].knows;
+        break;
+
+        case 4:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part', this.value)\" value=\"" + actConditionArray[i].part + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'IsIsnt', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"is\">is</option>" + 
+        "  <option value=\"isnt\">isn't</option>" + 
+        "</select>" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status + "\" size=\"10\" list=\"actStatusDropdown\">" + 
+        "</div>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].isisnt;
         break;
         
+        case 5:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part1', this.value)\" value=\"" + actConditionArray[i].part1 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "&nbsp;&nbsp;and	&nbsp;&nbsp;" + 
+        "    	<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part2', this.value)\" value=\"" + actConditionArray[i].part2 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div><br><br>" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'DoDont', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"do\">do</option>" + 
+        "  <option value=\"dont\">don't</option>" + 
+        "</select>" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status + "\" size=\"10\" list=\"actStatusDropdown\">" + 
+        "</div> each other." + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].dodont;
+        break;
+
+        case 6:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part1', this.value)\" value=\"" + actConditionArray[i].part1 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'IsIsnt', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"is\">is</option>" + 
+        "  <option value=\"isnt\">isn't</option>" + 
+        "</select>" + 
+        "        <div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status + "\" size=\"10\" list=\"actStatusDropdown\">" + 
+        "</div>" + 
+        "with" + 
+        "        <div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part2', this.value)\" value=\"" + actConditionArray[i].part2 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].isisnt;
+        break;
+
+        case 7:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part1', this.value)\" value=\"" + actConditionArray[i].part1 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Status', this.value)\" value=\"" + actConditionArray[i].status + "\" size=\"10\" list=\"actStatusDropdown\">" + 
+        "</div><br> with " + 
+        "" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Part2', this.value)\" value=\"" + actConditionArray[i].part2 + "\" size=\"13\" list=\"actPartDropdown\">" + 
+        "</div>" + 
+        "" + 
+        "<select onfocusout=\"conditionFocusOut(" + conditionID + ", 'Comparator', this.value)\" class=\"ui dropdown\" id=\"updateConditionSelect"+ conditionID +"\">" + 
+        "  <option value=\"=\">=</option>" + 
+        "  <option value=\"!=\">!=</option>" + 
+        "  <option value=\">\">></option>" + 
+        "  <option value=\"<\"><</option>" + 
+        "  <option value=\">=\">>=</option>" + 
+        "  <option value=\"<=\"><=</option>" + 
+        "</select>" + 
+        "" + 
+        "<div class=\"ui input focus\">" + 
+        "  <input type=\"number\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Number', this.value)\" value=\"" + actConditionArray[i].number + "\" style=\"width: 100px;\">" + 
+        "</div>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeCondition("+ conditionID +")\"><i class=\"minus icon\"></i></button>";
+        updateConditionSelectID = "updateConditionSelect" + conditionID;
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        byId(updateConditionSelectID).value = actConditionArray[i].comparator;
+        break;
+
+        case 8:
+        newDiv.innerHTML = "<div class=\"ui input focus\">" + 
+        "  <input type=\"text\" onfocusout=\"conditionFocusOut(" + conditionID + ", 'Pattern', this.value)\" value=\"" + actConditionArray[i].pattern + "\" size=\"13\" list=\"actPatternDropdown\">" + 
+        "</div>";
+
+        for(let j = 0; j < actConditionArray[i].parteventlocation.length; j++) {
+          newDiv.innerHTML = newDiv.innerHTML + "<div class=\"ui input focus\">" + 
+          "  <input type=\"text\"  onfocusout=\"conditionPartEventLocationFocusOut(" + conditionID + "," + j + ", this.value)\" value=\"" + actConditionArray[i].parteventlocation[j] + "\" placeholder=\"Part Event Location\" size=\"15\" list=\"actStatusDropdown\">" + 
+          "</div>";
+        }
+        newDiv.innerHTML = newDiv.innerHTML + "<button class=\"ui green icon button mini\" onclick=\"addConditionPartEventLocation("+ conditionID +")\"><i class=\"plus icon\"></i></button>" + 
+        "<button class=\"ui red icon button mini\" onclick=\"removeConditionPartEventLocation("+ conditionID +")\"><i class=\"minus icon\"></i></button>" + 
+        "";
+        conditionListDiv.appendChild(newDiv);//div goes live on site here
+        break;
     }
     
   }
 }
 
+function addConditionPartEventLocation(x) {
+  for (let i = 0; i < actConditionArray.length; i++) {
+    if (actConditionArray[i].id == x) {
+      actConditionArray[i].parteventlocation.push("");
+    }
+  }
+  updateConditionList();
+  
+}
+
+function removeConditionPartEventLocation(x){
+  for (let i = 0; i < actConditionArray.length; i++) {
+    if (actConditionArray[i].id == x) {
+      actConditionArray[i].parteventlocation.splice(-1);
+    }
+  }
+  updateConditionList()
+}
+
 function removeCondition(removeID) {
-  for (var i = 0; i < actConditionArray.length; i++) {
+  for (let i = 0; i < actConditionArray.length; i++) {
     if (actConditionArray[i].id == removeID) {
       actConditionArray.splice(i, 1);
     }

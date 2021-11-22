@@ -73,7 +73,7 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <option value="2">Location</option>
               <option value="3">Event</option>
             </select>
-            <button class="ui green icon button mini" onclick="addParam()"><i class="plus icon"></i></button>
+            
             <br>
             <!-- Here begins the diferent boxes for actions parameters-->
 
@@ -111,10 +111,10 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <div class="ui input focus">
                 <input type="text" id="actParamAddEvent" placeholder="Event name..." list="actEventDropdown">
               </div>
-            </div><br>
+            </div>
             <!-- Event adding ends here-->
-            
-            <b>Current Existing Parameters:</b>
+            <button class="ui green icon button mini" onclick="addParam()"><i class="plus icon"></i>Add Action Parameter</button>
+            <br><br><b>Current Existing Parameters:</b>
             <div id="actParameterList">
               
             </div>
@@ -164,8 +164,8 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
               <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
               <option value="8">[Pattern] [Participant/Event/Location]+</option>
-            </select><br><br>
-            <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i> Add Condition</button>
+            </select>
+            
             <!-- the condition boxes go here-->
 
               <!-- Condition Box #1-->
@@ -313,12 +313,13 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
                 <div class="ui input focus">
                   <input type="text" id="conditionBox8Pattern" placeholder="Pattern..." size="13" list="actPatternDropdown">
                 </div>
-				
-				        <div class="ui input focus">
+                <br>You will be able to add part / event / location after defining the pattern and adding it
+				        <!--<div class="ui input focus">
                   <input type="text" id="conditionBox8PartEventLocation" placeholder="Participant/Event/Location" size="25" list="actStatusDropdown">
-                </div>
+                </div>-->
               </div>
               
+              <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i> Add Condition</button><br><br>
               <div id="actConditionList"></div>
             <!-- condition stuff ends here-->
             <br><br><br>
