@@ -322,7 +322,168 @@ General work has been towards the ACTION functionalities of this Kismet Authorin
               <button class="ui green icon button mini" onclick="addCondition()"><i class="plus icon"></i> Add Condition</button><br><br>
               <div id="actConditionList"></div>
             <!-- condition stuff ends here-->
-            <br><br><br>
+            <br><br>
+            
+            <!-- results stuff starts here-->
+            <span><b>Results:</b></span>
+            <br><br>
+            <select id="actResultSelect" class="ui dropdown" style="font-size: 16px;" onchange="actResultBoxChange(this.value)">
+              <option value="0">Select a result</option>
+              <option value="1">[Participant]‘s [Status] [Comparator] [#]</option>
+              <option value="2">[Participant]‘s [Status] [Comparator] [Participant]‘s [Status]</option>
+              <option value="3">[Participant]‘s [Knows] [Event]</option>
+              <option value="4">[Participant] [is/isn't] [Status]</option>
+              <option value="5">[Participant] and [Participant] [do/don't] [Status] each other</option>
+              <option value="6">[Participant] [is/isn’t] [Status] with [Participant]</option>
+              <option value="7">[Participant] [Status] with [Participant] [Comparator] [Number]</option>
+              <option value="8">[Pattern] [Participant/Event/Location]+</option>
+            </select>
+            
+            <!-- the result boxes go here-->
+
+              <!-- Result Box #1-->
+              <div class="ui raised segment left aligned" id="actResultBox1">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox1Part" placeholder="Participant's" size="13" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox1Status" placeholder="Status" size="8" list="actStatusDropdown">
+                </div>
+                <select id="resultBox1Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="+=">+=</option>
+                  <option value="-=">-=</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="number" id="resultBox1Number" placeholder="Number" style="width: 100px;">
+                </div>
+              </div>
+
+              <!-- Result Box #2-->
+              <div class="ui raised segment left aligned" id="actResultBox2">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox2Part1" placeholder="Participant's" size="10" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox2Status1" placeholder="Status" size="5" list="actStatusDropdown">
+                </div>
+                <select id="resultBox2Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="+=">+=</option>
+                  <option value="-=">-=</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox2Part2" placeholder="Participant's" size="10" list="actPartDropdown">
+                </div>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox2Status2" placeholder="Status" size="5" list="actStatusDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Result Box #3-->
+              <div class="ui raised segment left aligned" id="actResultBox3">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox3Part" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+                <select id="resultBox3Knows" class="ui dropdown">
+                  <option value="knows">knows</option>
+                  <option value="heard">heard</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox3Event" placeholder="Event" size="13" list="actEventDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Result Box #4-->
+              <div class="ui raised segment left aligned" id="actResultBox4">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox4Part" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+                <select id="resultBox4IsIsnt" class="ui dropdown">
+                  <option value="is">is</option>
+                  <option value="isnt">isn't</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox4Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Result Box #5-->
+              <div class="ui raised segment left aligned" id="actResultBox5">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox5Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				&nbsp;&nbsp;and	&nbsp;&nbsp;
+			        	<div class="ui input focus">
+                  <input type="text" id="resultBox5Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div><br><br>
+                <select id="resultBox5DoDont" class="ui dropdown">
+                  <option value="do">do</option>
+                  <option value="dont">don't</option>
+                </select>
+                <div class="ui input focus">
+                  <input type="text" id="resultBox5Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div> each other. 
+              </div>
+			  
+			  <!-- Result Box #6-->
+              <div class="ui raised segment left aligned" id="actResultBox6">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox6Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+			        	<select id="resultBox6IsIsnt" class="ui dropdown">
+                  <option value="is">is</option>
+                  <option value="isnt">isn't</option>
+                </select>
+				        <div class="ui input focus">
+                  <input type="text" id="resultBox6Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div>
+                with
+				        <div class="ui input focus">
+                  <input type="text" id="resultBox6Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+              </div>
+			  
+			  <!-- Result Box #7-->
+              <div class="ui raised segment left aligned" id="actResultBox7">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox7Part1" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				
+				        <div class="ui input focus">
+                  <input type="text" id="resultBox7Status" placeholder="Status" size="10" list="actStatusDropdown">
+                </div><br> with 
+				
+				        <div class="ui input focus">
+                  <input type="text" id="resultBox7Part2" placeholder="Participant" size="13" list="actPartDropdown">
+                </div>
+				
+				        <select id="resultBox7Comparator" class="ui dropdown">
+                  <option value="=">=</option>
+                  <option value="+=">+=</option>
+                  <option value="-=">-=</option>
+                </select>
+				
+				        <div class="ui input focus">
+                  <input type="number" id="resultBox7Number" placeholder="Number" style="width: 100px;">
+                </div>
+              </div>
+			  
+			  <!-- Result Box #8-->
+              <div class="ui raised segment left aligned" id="actResultBox8">
+                <div class="ui input focus">
+                  <input type="text" id="resultBox8Pattern" placeholder="Pattern..." size="13" list="actPatternDropdown">
+                </div>
+                <br>You will be able to add part / event / location after defining the pattern and adding it
+				        <!--<div class="ui input focus">
+                  <input type="text" id="resultBox8PartEventLocation" placeholder="Participant/Event/Location" size="25" list="actStatusDropdown">
+                </div>-->
+              </div>
+              
+              <button class="ui green icon button mini" onclick="addResult()"><i class="plus icon"></i> Add Result</button><br><br>
+              <div id="actResultList"></div>
+            <!-- result stuff ends here-->
+            <br>
             <button class="ui green button mini" onclick="actionSubmit()">Initialize</button>
           </div>
         </div>
